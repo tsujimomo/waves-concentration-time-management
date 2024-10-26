@@ -38,7 +38,6 @@ interface YouTubePlayer {
 }
 
 export function YoutubePlayer() {
-  // playerステートを削除し、refのみを使用
   const playerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,26 +46,29 @@ export function YoutubePlayer() {
     const firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
 
-    window.onYouTubeIframeAPIReady = () => {
-      if (playerRef.current) {
-        const newPlayer = new window.YT.Player(playerRef.current, {
-          videoId: "PKFZ4ho67Cg",
-          playerVars: {
-            start: 120,
-            rel: 0,
-            controls: 0,
-            hl: "en",
-            loop: 1,
-          },
-          events: {
-            onReady: onPlayerReady,
-          },
-        });
+    // プレーヤーのコンテナに一意のIDを設定
+    if (playerRef.current) {
+      playerRef.current.id = "youtube-player-container";
+    }
 
-        // グローバル変数として保存
-        if (typeof window !== "undefined") {
-          window.youtubePlayer = newPlayer;
-        }
+    window.onYouTubeIframeAPIReady = () => {
+      // IDを使用してプレーヤーを初期化
+      const newPlayer = new window.YT.Player("youtube-player-container", {
+        videoId: "PKFZ4ho67Cg",
+        playerVars: {
+          start: 120,
+          rel: 0,
+          controls: 0,
+          hl: "en",
+          loop: 1,
+        },
+        events: {
+          onReady: onPlayerReady,
+        },
+      });
+
+      if (typeof window !== "undefined") {
+        window.youtubePlayer = newPlayer;
       }
     };
 
