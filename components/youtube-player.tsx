@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./youtube-player.module.css";
 
 // グローバル型定義
