@@ -38,7 +38,7 @@ interface YouTubePlayer {
 }
 
 export function YoutubePlayer() {
-  const [player, setPlayer] = useState<YouTubePlayer | null>(null);
+  // playerステートを削除し、refのみを使用
   const playerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export function YoutubePlayer() {
           },
         });
 
-        setPlayer(newPlayer);
+        // グローバル変数として保存
         if (typeof window !== "undefined") {
           window.youtubePlayer = newPlayer;
         }
@@ -85,19 +85,3 @@ export function YoutubePlayer() {
     </div>
   );
 }
-
-// プレーヤーのメソッドをエクスポート
-export const useYouTubePlayer = () => {
-  const player = window.youtubePlayer;
-  return {
-    loadVideo: (videoId: string, startSeconds?: number) => {
-      player?.loadVideoById(videoId, startSeconds);
-    },
-    playVideo: () => {
-      player?.playVideo();
-    },
-    pauseVideo: () => {
-      player?.pauseVideo();
-    },
-  };
-};
