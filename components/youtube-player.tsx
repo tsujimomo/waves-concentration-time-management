@@ -6,9 +6,31 @@ import styles from "./youtube-player.module.css";
 // グローバルウィンドウオブジェクトにYTとonYouTubeIframeAPIReadyを追加します。
 declare global {
   interface Window {
-    YT: any;
+    YT: YT;
     onYouTubeIframeAPIReady: () => void;
   }
+}
+
+// YouTube Player API インターフェース（プレースホルダーをAPIドキュメントからの実際の型で置き換えてください）
+interface YT {
+  Player: new (elementId: string, options: PlayerOptions) => YouTubePlayer;
+  // 必要に応じてYTオブジェクトの他のプロパティを追加します。PlayerStateChangeListenerなど
+}
+
+interface PlayerOptions {
+  videoId: string;
+  playerVars?: {
+    start?: number;
+    rel?: number;
+    controls?: number;
+    hl?: string;
+    loop?: number;
+    // ... その他のplayerVars
+  };
+  events: {
+    onReady?: (event: { target: YouTubePlayer }) => void;
+    // onStateChange?: (event: any) => void; // この型を調整する必要があるかもしれません
+  };
 }
 
 // YouTube Player インターフェースを定義します（既知のプロパティで置き換えてください）
@@ -63,11 +85,11 @@ export function YoutubePlayer() {
   }, []);
 
   // 指定されたビデオIDでビデオを再生する関数です。
-  const playVideo = (videoId: string) => {
-    if (player) {
-      player.loadVideoById(videoId);
-    }
-  };
+  // const playVideo = (videoId: string) => {
+  //   if (player) {
+  //     player.loadVideoById(videoId);
+  //   }
+  // };
 
   return (
     <>
