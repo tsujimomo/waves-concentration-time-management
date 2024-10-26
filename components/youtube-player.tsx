@@ -8,10 +8,11 @@ declare global {
   interface Window {
     YT: YT;
     onYouTubeIframeAPIReady: () => void;
+    youtubePlayer: YouTubePlayer; // グローバル変数の型定義を追加
   }
 }
 
-// インターフェース定義（前と同じ）
+// インターフェース定義
 interface YT {
   Player: new (elementId: string, options: PlayerOptions) => YouTubePlayer;
 }
@@ -36,36 +37,9 @@ interface YouTubePlayer {
   pauseVideo: () => void;
 }
 
-// YouTubePlayerコンテキストの型定義
-interface YouTubePlayerContextType {
-  player: YouTubePlayer | null;
-  loadVideo: (videoId: string, startSeconds?: number) => void;
-  playVideo: () => void;
-  pauseVideo: () => void;
-}
-
 export function YoutubePlayer() {
   const [player, setPlayer] = useState<YouTubePlayer | null>(null);
   const playerRef = useRef<HTMLDivElement>(null);
-
-  // プレーヤーの制御メソッド
-  const loadVideo = (videoId: string, startSeconds?: number) => {
-    if (player) {
-      player.loadVideoById(videoId, startSeconds);
-    }
-  };
-
-  const playVideo = () => {
-    if (player) {
-      player.playVideo();
-    }
-  };
-
-  const pauseVideo = () => {
-    if (player) {
-      player.pauseVideo();
-    }
-  };
 
   useEffect(() => {
     const tag = document.createElement("script");
@@ -90,10 +64,8 @@ export function YoutubePlayer() {
         });
 
         setPlayer(newPlayer);
-        // グローバル変数を使用する代わりに、playerステートを使用
         if (typeof window !== "undefined") {
-          // window.youtubePlayerの代わりにplayerステートを使用
-          window.youtubePlayer = newPlayer; // 後方互換性のために残す
+          window.youtubePlayer = newPlayer;
         }
       }
     };
