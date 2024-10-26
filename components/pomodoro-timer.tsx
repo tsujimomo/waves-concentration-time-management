@@ -273,7 +273,7 @@ export function PomodoroTimerComponent() {
                   <Input
                     id="pomodoro-time"
                     type="number"
-                    value={pomodoroTime}
+                    value={pomodoroTime ?? ""} // null の場合は空文字列を使用
                     onChange={(e) => setPomodoroTime(Number(e.target.value))}
                   />
                 </div>
@@ -284,7 +284,7 @@ export function PomodoroTimerComponent() {
                   <Input
                     id="short-break-time"
                     type="number"
-                    value={shortBreakTime}
+                    value={shortBreakTime ?? ""} // null の場合は空文字列を使用
                     onChange={(e) => setShortBreakTime(Number(e.target.value))}
                   />
                 </div>
@@ -295,7 +295,7 @@ export function PomodoroTimerComponent() {
                   <Input
                     id="long-break-time"
                     type="number"
-                    value={longBreakTime}
+                    value={longBreakTime ?? ""} // null の場合は空文字列を使用
                     onChange={(e) => setLongBreakTime(Number(e.target.value))}
                   />
                 </div>
