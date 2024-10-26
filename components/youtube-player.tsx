@@ -7,8 +7,8 @@ import styles from "./youtube-player.module.css";
 declare global {
   interface Window {
     YT: YT;
-    onYouTubeIframeAPIReady: () => void;
-    youtubePlayer: YouTubePlayer; // グローバル変数の型定義を追加
+    onYouTubeIframeAPIReady?: () => void;
+    youtubePlayer: YouTubePlayer;
   }
 }
 
