@@ -145,13 +145,14 @@ export function PomodoroTimerComponent() {
 
   // YouTubeプレーヤーを制御するためのuseEffectフック。currentModeが変更されたときに実行されます。
   useEffect(() => {
-    if (typeof window !== "undefined" && window.youtubePlayer) {
+    const player = window.youtubePlayer;
+    if (typeof window !== "undefined" && player) {
       if (currentMode === "pomodoro") {
-        window.youtubePlayer.loadVideoById("PKFZ4ho67Cg", 120);
+        player.loadVideoById("PKFZ4ho67Cg", 120);
       } else if (currentMode === "shortBreak") {
-        window.youtubePlayer.loadVideoById("OVct34NUk3U", 210);
+        player.loadVideoById("OVct34NUk3U", 210);
       } else if (currentMode === "longBreak") {
-        window.youtubePlayer.loadVideoById("2eQEHsGxbEo", 360);
+        player.loadVideoById("2eQEHsGxbEo", 360);
       }
     }
   }, [currentMode]);
