@@ -11,9 +11,17 @@ declare global {
   }
 }
 
+// YouTube Player インターフェースを定義します（既知のプロパティで置き換えてください）
+interface YouTubePlayer {
+  loadVideoById: (videoId: string, startSeconds?: number) => void;
+  playVideo: () => void;
+  pauseVideo: () => void;
+  // その他必要なメソッドを追加
+}
+
 export function YoutubePlayer() {
   // YouTubeプレーヤーインスタンスの状態を管理します。
-  const [player, setPlayer] = useState<any>(null);
+  const [player, setPlayer] = useState<YouTubePlayer | null>(null);
 
   // コンポーネントがマウントされたときにYouTube IFrame APIをロードし、プレーヤーを初期化します。
   useEffect(() => {
@@ -48,7 +56,8 @@ export function YoutubePlayer() {
     };
 
     // プレーヤーの準備ができたらビデオを再生します。
-    function onPlayerReady(event: any) {
+    function onPlayerReady(event: { target: YouTubePlayer }) {
+      // イベントの型付け
       event.target.playVideo();
     }
   }, []);
